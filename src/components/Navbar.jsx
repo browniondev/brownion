@@ -26,13 +26,12 @@ const Navbar = () => {
         {isOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
-      {/* Navbar */}
       <nav
         className={`font-['comfortaa'] fixed top-0 right-0 h-full z-40 bg-black border-l border-gray-600 bg-opacity-90 backdrop-blur-md transition-all duration-300 ease-in-out ${
-          isOpen ? "w-64" : "w-0 lg:w-64"
+          isOpen ? "w-48" : "w-0 lg:w-48"
         }`}
       >
-        <div className="flex flex-col h-full justify-center items-start p-8 lg:p-20 space-y-8">
+        <div className="flex flex-col h-full justify-center items-start p-5 lg:p-10 space-y-8">
           <div className="mb-8">
             <NavLink
               to="/"
@@ -49,7 +48,6 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Overlay for mobile */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"

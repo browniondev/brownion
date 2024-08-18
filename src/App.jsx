@@ -8,12 +8,12 @@ const App = () => {
   return (
     <Router>
       <div className="App bg-black">
-        {/* <Navbar /> */}
+        <Navbar />
         <ScrollContainer>
           <Routes>
             <Route path="/" element={<Hero />} />
           </Routes>
-        </ScrollContainer>
+        </ScrollContainer>{" "}
       </div>
     </Router>
   );

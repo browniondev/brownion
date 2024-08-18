@@ -2,7 +2,6 @@ import React, { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import LocomotiveScroll from "locomotive-scroll";
 
 const AnimatedText = ({ text, containerRef }) => {
   const characters = text.split("").map((char, index) => (
@@ -20,7 +19,7 @@ const AnimatedText = ({ text, containerRef }) => {
 
     gsap.fromTo(
       chars,
-      { opacity: 0, y: 20 },
+      { opacity: 1, y: 100 },
       {
         opacity: 1,
         y: 0,
@@ -28,8 +27,8 @@ const AnimatedText = ({ text, containerRef }) => {
         stagger: 0.02,
         scrollTrigger: {
           trigger: containerRef.current,
-          start: "top 100%",
-          end: "top 60%",
+          start: "top 170%",
+          end: "bottom 150%",
           scrub: 3,
         },
       }
@@ -46,28 +45,19 @@ const BrandHero = () => {
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
-
-    // Initialize Locomotive Scroll
-    const scroll = new LocomotiveScroll({
-      el: containerRef.current,
-      smooth: true,
-    });
-
-    // GSAP animations for circle graphic
     gsap.to(circleGraphicRef.current, {
-      rotate: "45deg",
+      rotate: "60deg",
       duration: 1.5,
       ease: "power2.out",
       scrollTrigger: {
         trigger: circleGraphicRef.current,
-        start: "top 80%",
-        end: "top 60%",
-        scrub: 2,
+        start: "top 95%",
+        end: "bottom 80%",
+        scrub: 1,
       },
     });
 
     return () => {
-      scroll.destroy();
       gsap.killTweensOf(circleGraphicRef.current);
     };
   }, []);
@@ -80,7 +70,6 @@ const BrandHero = () => {
         transition={{ duration: 1 }}
         style={{
           backgroundColor: "black",
-         
         }}
         className="font-['comfortaa'] bg-black text-white min-h-screen flex items-center justify-center p-4 sm:p-8 md:p-12"
       >
