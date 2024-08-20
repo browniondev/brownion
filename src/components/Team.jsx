@@ -12,27 +12,27 @@ function App() {
     {
       id: 1,
       name: "Team Member 1",
-      image: "https://picsum.photos/id/1/4192/1080/?random=2",
+      image: "https://loremflickr.com/512/512?random=1",
     },
     {
       id: 2,
       name: "Team Member 2",
-      image: "https://picsum.photos/id/2/1920/1080/?random=2",
+      image: "https://loremflickr.com/512/512?random=10",
     },
     {
       id: 3,
       name: "Team Member 3",
-      image: "https://picsum.photos/id/3/1920/1080/?random=2",
+      image: "https://loremflickr.com/512/512?random=100",
     },
     {
       id: 4,
       name: "Team Member 4",
-      image: "https://picsum.photos/id/4/1920/1080/?random=2",
+      image: "https://loremflickr.com/512/512?random=1000",
     },
     {
       id: 5,
       name: "Team Member 5",
-      image: "https://picsum.photos/id/5/1920/1080/?random=2",
+      image: "https://loremflickr.com/512/512?random=10000",
     },
   ];
 
