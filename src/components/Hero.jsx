@@ -5,13 +5,15 @@ import Intro from "./Intro";
 import ExpertiseComponent from "./Expertise";
 import FeaturedWork from "./Work";
 import OurTeam from "./Team";
-import Projects from "./Projects";
+import BentoGrid from "./Projects";
 import HeroTextparticles from "./HeroTextparticles";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const Hero = () => {
   const heroRef = useRef(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+  }, []);
 
   useEffect(() => {
     const scrollContainer = document.querySelector("[data-scroll-container]");
@@ -35,26 +37,14 @@ const Hero = () => {
 
   return (
     <div data-scroll-section ref={heroRef}>
-      <div
-        className="font-['comfortaa'] bg-black text-white min-h-screen flex flex-col justify-center items-center p-4 relative"
-        style={{
-          backgroundColor: "black",
-          backgroundRepeat: "repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "bottom",
-          maskImage: "linear-gradient(circle, white 10%, transparent 100%)",
-          WebkitMaskImage:
-            "linear-gradient(circle, white 10%, transparent 100%)",
-        }}
-      >
-        {/* Image with reduced opacity */}
+      <div className="font-['comfortaa'] w-full overflow-x-hidden  bg-black text-white min-h-screen flex flex-col justify-center items-center p-4 relative">
         <div
           className="absolute inset-0"
           style={{
             backgroundImage: `url("https://i.pinimg.com/originals/c5/38/7d/c5387d91868b74d255f31fc78458660b.jpg")`,
             backgroundSize: "cover",
             backgroundPosition: "center",
-            opacity: 0.4, // Adjust this value to change the opacity
+            opacity: 0.5, 
           }}
         />
         <div className="text-center mb-8 relative z-3 flex flex-col items-center">
@@ -70,7 +60,7 @@ const Hero = () => {
       <ExpertiseComponent />
       <FeaturedWork />
       <OurTeam />
-      <Projects />
+      <BentoGrid />
     </div>
   );
 };

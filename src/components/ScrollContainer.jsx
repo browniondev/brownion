@@ -24,7 +24,7 @@ const ScrollContainer = ({ children }) => {
     locoScroll.current = new LocomotiveScroll({
       el: scrollRef.current,
       smooth: true,
-      multiplier: 0.8, // Adjust this value to make scrolling faster or slower
+      multiplier: 2, // Adjust this value to make scrolling faster or slower
       lerp: 0.05, // Lower values make scrolling smoother but less responsive
       smartphone: {
         smooth: true,
