@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+@layer base {
+  :root {
+    --background: 240 100% 99%;
+    /* Spirited white */
+    --foreground: 0 0% 13%;
+    /* antique black */
+    --primary: 206 94% 19%;
+    /* olive blue dark*/
+    --primary-foreground: 294 94% 60%;
+    /* olive blue light */
+    --secondary: 236 29% 72%;
+    /* lavender dark */
+    --secondary-foreground: 235 46% 90%;
+    /* lavender light */
+    --muted: var(--foreground)/70%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 216 100% 83%;
+    /* light blue shade sorts */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: var(--secondary-foreground);
+    --input: var(--primary);
+    --ring: 240 5.9% 10%;
+    --radius: .75rem;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 13%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 13%/50%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+  }
+}
+
+/* ion-content::part(scroll) {
+  color: transparent;
+} */
+
+.customScrollBar::-webkit-scrollbar-track {
+  background-color: #fff8f3;
+  cursor: pointer;
+}
+
+.customScrollBar::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 2px black;
+  cursor: grab;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+body.animate-black-screen #black-screen {
+  opacity: 1;
+}
+
+#black-screen {
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+body {
+  transition-property: opacity, transform, filter, background;
+  transition-timing-function: ease-in-out;
+  transition-duration: 500ms;
+}
+
+.page-transition {
+  opacity: 0.5;
+  /* Slight transparency for the blur effect */
+  background: rgba(255, 255, 255, 0.2);
+  /* Semi-transparent background */
+  backdrop-filter: blur(15px) saturate(180%);
+  /* Frosted glass effect */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow to enhance glass effect */
+  filter: blur(100px);
+  /* Optional additional blur on top */
+}
