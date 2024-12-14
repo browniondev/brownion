@@ -18,9 +18,9 @@ const config = {
       },
     },
     fontFamily: {
-      sans: ["ui-sans-serif", "system-ui"],
-      serif: ["ui-serif", "Georgia"],
-      mono: ["ui-monospace", "SFMono-Regular"],
+      sans: ["var(--font-mont)"],
+      serif: ["var(--font-comf)"],
+      mono: ["var(--font-plex)"],
 
       body: ['"Open Sans"'],
     },

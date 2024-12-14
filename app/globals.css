@@ -55,6 +55,108 @@
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
   }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 3rem 2rem;
+    background-color: white;
+  }
+  .wrapper {
+    position: relative;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 80%;
+    height: 90%;
+  }
+  .wrapper img {
+    height: 396px;
+  }
+
+  /* Fire trail cursor css */
+  
+  .cursor {
+    mix-blend-mode: difference;
+    position: fixed;
+    border-radius: 0;
+    display: block;
+    z-index: 9999999;
+    top: 0;
+    left: 0;
+  }
+  .trail {
+    height: 24px;
+    width: 24px;
+    border-radius: 100%;
+    position: absolute;
+    pointer-events: none;
+    background-color: #fff;
+    z-index: 1000;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .particles {
+    height: 24px;
+    width: 24px;
+    border-radius: 100%;
+    position: absolute;
+    pointer-events: none;
+    background-color: #fff;
+    z-index: 1000;
+    overflow: visible;
+  }
+  
+  
+  .wrapper img:hover {
+    top: 0;
+    left: 0;
+    padding: 1rem;
+    transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  }
+  .wrapper-usps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+  @media screen and (max-width: 768px) {
+    .wrapper-usps {
+      grid-template-columns: 1fr;
+    }
+  }
+  .wrapper-usps .usp {
+    display: flex;
+    gap: 2rem;
+  }
+  .wrapper-usps .usp img {
+    height: 128px;
+    width: auto;
+    padding: 0.5rem;
+    border: solid #ececec 1px;
+  }
+  
+  .cont {
+    min-height: calc(100vh - 4rem);
+  }
+  
+  .montserrat-bold {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+  }
+  
 }
 
 /* ion-content::part(scroll) {
