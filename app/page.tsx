@@ -122,7 +122,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="cont flex-grow grid grid-cols-12 lg:grid-rows-9 sm:grid-rows-9 mx-auto gap-3">
+      <div className="cont mt-12 flex-grow grid grid-cols-12 lg:grid-rows-9 sm:grid-rows-9 mx-auto gap-3">
         {/* Row 1 */}
         <div className="content col-span-12 sm:col-span-8 sm:row-span-2 md:row-span-3 bg-red border rounded-2xl relative z-0">
           <div className="controls absolute flex gap-4">
