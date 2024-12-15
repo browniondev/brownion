@@ -26,8 +26,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`overflow-x-hidden ${mont.variable} ${plexMono.variable} ${comf.variable}`}>
-      <body className={"no-scrollbar"}>
-        <FireCursor />
+      <body className={" no-scrollbar"}>
+        {/* <FireCursor /> */}
       <Navbar />
       <Sidebar />
       <main className="flex w-full flex-col relative gap-6 p-2">{children}</main>

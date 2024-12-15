@@ -1,12 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Single+Day&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
-
 
 @layer base {
   :root {
@@ -22,7 +19,7 @@
     /* lavender dark */
     --secondary-foreground: 235 46% 90%;
     /* lavender light */
-    --muted: var(--foreground)/70%;
+    --muted: var(--foreground) / 70%;
     --muted-foreground: 240 3.8% 46.1%;
     --accent: 216 100% 83%;
     /* light blue shade sorts */
@@ -31,7 +28,7 @@
     --border: var(--secondary-foreground);
     --input: var(--primary);
     --ring: 240 5.9% 10%;
-    --radius: .75rem;
+    --radius: 0.75rem;
   }
 
   .dark {
@@ -83,7 +80,7 @@
   }
 
   /* Fire trail cursor css */
-  
+
   .cursor {
     mix-blend-mode: difference;
     position: fixed;
@@ -117,8 +114,7 @@
     z-index: 1000;
     overflow: visible;
   }
-  
-  
+ 
   .wrapper img:hover {
     top: 0;
     left: 0;
@@ -145,18 +141,17 @@
     padding: 0.5rem;
     border: solid #ececec 1px;
   }
-  
+
   .cont {
     min-height: calc(100vh - 4rem);
   }
-  
+
   .montserrat-bold {
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-weight: 800;
     font-style: normal;
   }
-  
 }
 
 /* ion-content::part(scroll) {
@@ -191,7 +186,6 @@ body.animate-black-screen #black-screen {
   opacity: 0;
   pointer-events: none;
 }
-
 
 body {
   transition-property: opacity, transform, filter, background;

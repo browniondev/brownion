@@ -66,7 +66,7 @@ const HorizontalScroll: React.FC = () => {
         const imageWidth = container.offsetWidth / 3;
 
         if (container.scrollLeft < imageWidth) {
-          container.scrollLeft = container.scrollWidth / 3;
+          container.scrollLeft = container.scrollWidth / 10;
         } else if (container.scrollLeft > (container.scrollWidth * 2) / 3) {
           container.scrollLeft = container.scrollWidth / 3;
         }
@@ -80,7 +80,7 @@ const HorizontalScroll: React.FC = () => {
       scrollElement.addEventListener("wheel", handleWheel);
       scrollElement.addEventListener("scroll", handleScroll);
 
-      const initialScrollPosition = scrollElement.scrollWidth / 3;
+      const initialScrollPosition = scrollElement.scrollWidth / 10;
       scrollElement.scrollLeft = initialScrollPosition;
       setScrollPosition(initialScrollPosition);
     }
@@ -118,9 +118,9 @@ const HorizontalScroll: React.FC = () => {
     setExpandedIndex(null);
   };
 
-  const calculateOpacityAndScale = (index: number) => {
+  const calculateGrayscaleAndScale = (index: number) => {
     if (expandedIndex === null) {
-      if (!scrollRef.current) return { opacity: 1, scale: 1 };
+      if (!scrollRef.current) return { grayscale: 0, scale: 1 };
 
       const elementWidth = scrollRef.current.offsetWidth / 3;
       const center = scrollPosition + scrollRef.current.offsetWidth / 2;
@@ -128,14 +128,13 @@ const HorizontalScroll: React.FC = () => {
 
       const distanceFromCenter = Math.abs(center - elementCenter);
       const isCentral = distanceFromCenter < elementWidth / 2;
-      const opacity = isCentral ? 1 : 0.4;
+      const grayscale = isCentral ? 0 : 1; // Full color if central, grayscale otherwise
+      const scale = isCentral ? 1.05 : 1;
 
-      const scale = isCentral ? 1 : 1;
-
-      return { opacity, scale };
+      return { grayscale, scale };
     } else {
       return {
-        opacity: expandedIndex === index ? 1 : 0.4,
+        grayscale: expandedIndex === index ? 0 : 1,
         scale: expandedIndex === index ? 2 : 1,
       };
     }
@@ -210,34 +209,44 @@ const HorizontalScroll: React.FC = () => {
         className="overflow-x-auto whitespace-nowrap cursor-pointer no-scrollbar"
         style={{ maxWidth: "100vw" }}
       >
-        <div className="inline-flex mt-[120px]  items-center gap-4 justify-center">
+        <div className="inline-flex mt-[120px] items-center gap-8 justify-center">
           {infiniteImages.map((image, index) => {
-            const { opacity, scale } = calculateOpacityAndScale(index);
+            const { grayscale, scale } = calculateGrayscaleAndScale(index);
 
             return (
               <motion.div
                 key={index}
                 className={clsx(
-                  "inline-block min-w-[calc(100vw)]    relative transition-transform duration-300"
+                  "inline-block min-w-[calc(100vw)] relative transition-transform duration-300"
                 )}
                 style={{
-                  width: "calc(100vw / 3.2)",
-                  minWidth: "calc(100vw/3.2)",
-                  maxHeight: "500px",
+                  width: "calc(100vw / 3.4)",
+                  minWidth: "calc(100vw/3.4)",
                   height: "500px",
-                  minHeight: "500px",
                   overflow: "hidden",
                 }}
-                initial={{ opacity: 0.3 }}
-                whileInView={{ opacity }}
-                transition={{ duration: 0.5 }}
+                initial={{ filter: "grayscale(1)", scale: 1 }}
+                animate={{
+                  filter: `grayscale(${grayscale})`,
+                  scale,
+                  opacity: 1.8- grayscale,
+                }}
+                transition={{
+                  filter: { duration: 0.5, ease: "easeInOut" },
+                  scale: { duration: 0.5, ease: "easeInOut" },
+                }}
               >
                 <TransitionLink href="/projects/project">
-                  <img
+                  <motion.img
                     src={image.src}
                     alt={image.caption}
-                    className=" h-[350px] min-w-[600px] object-cover shadow-md"
-                    style={{ opacity }}
+                    className="h-[350px] min-w-[600px] object-cover shadow-md z-50"
+                    style={{ filter: `grayscale(${grayscale})` }}
+                    whileHover={{ scale: 1.05 }} // Slight scaling on hover for interactivity
+                    transition={{
+                      scale: { duration: 0.3, ease: "easeOut" },
+                      filter: { duration: 0.5, ease: "easeInOut" },
+                    }}
                     onClick={() => expandedIndex === null && handleImageClick()}
                   />
                 </TransitionLink>
