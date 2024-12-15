@@ -7,9 +7,16 @@ export default function Home() {
         {/* Row 1 */}
         <div className="content col-span-12 sm:col-span-8 sm:row-span-2 md:row-span-3 bg-red border rounded-2xl relative z-0">
           <div className="controls absolute flex gap-4">
-            <div>
+            <button onClick={() => {
+              const video = document.querySelector('video');
+              console.log(video)
+              if (video) {
+                video.style.width = '100%';
+                video.style.height = '100%';
+              }
+            }}>
               fullscreen
-            </div>
+            </button>
           </div>
           <video
             src="/showreel.mp4"
@@ -20,7 +27,7 @@ export default function Home() {
           />
         </div>
         <div className="content col-span-6 sm:row-span-1 sm:col-span-4 md:row-span-2 bg-red p-2 rounded-2xl">
-          <h2 className="montserrat-bold">Design. Develop. Deliver.</h2>
+          <h2 className="font-mono lg:text-3xl w-full h-full flex items-center justify-center">Design. <br />Develop. <br />Deliver.</h2>
         </div>
         {/* Row 2 */}
         <div className="content col-span-6 sm:col-span-8 sm:row-span-1 md:col-span-4 md:row-span-3 bg-red border rounded-2xl">
