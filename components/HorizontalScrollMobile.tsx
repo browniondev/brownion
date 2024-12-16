@@ -88,7 +88,7 @@ const HorizontalScrollMobile: React.FC = () => {
   };
 
   return (
-    <div className="relative flex pt-[200px] py-3 overflow-hidden">
+    <div className="relative flex  py-3 overflow-hidden">
       <AnimatePresence>
         {expandedIndex !== null && (
           <>
