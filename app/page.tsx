@@ -123,6 +123,7 @@ export default function Home() {
 
   return (
     <>
+    <img src="/projectbg.png" alt="" className="w-full h-auto rounded-md my-24" />
       <div className="cont mt-12 flex-grow grid grid-cols-12 lg:grid-rows-9 sm:grid-rows-9 mx-auto gap-3">
         {/* Row 1 */}
         <div className="content col-span-12 sm:col-span-8 sm:row-span-2 md:row-span-3 rounded-2xl relative z-0">
