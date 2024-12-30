@@ -186,7 +186,7 @@ const ProjectPage: React.FC = () => {
                 onClick={handleImageClick}
                 style={
                   !isFocused
-                    ? { filter: `grayscale(1)` }
+                    ? { filter: `grayscale(0)` }
                     : { filter: `grayscale(0)` }
                 }
                 className=" z-10 max-h-full object-cover rounded-lg cursor-pointer shadow-md"
@@ -235,7 +235,7 @@ const ProjectPage: React.FC = () => {
               style={{ filter: `grayscale(1)` }}
               className=" h-[400px] w-[400px]  md:max-w-full md:max-h-[40vh] rounded-lg object-cover"
               initial={{
-                filter: "grayscale(1)", // Start with full grayscale
+                filter: "grayscale(0)", // Start with full grayscale
                 clipPath: "inset(0% 0% 0% 0%)", // Start with the bottom being fully visible
               }}
               whileHover={{
@@ -274,7 +274,7 @@ const ProjectPage: React.FC = () => {
                   alt={`Logo ${index}`}
                   className="w-24 h-24 mx-4 grayscale cursor-pointer"
                   initial={{
-                    filter: "grayscale(1)",
+                    filter: "grayscale(0)",
                     clipPath: "inset(0% 0% 0% 0%)", // Initial state: fully visible
                   }}
                   whileHover={{
