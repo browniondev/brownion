@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import FireCursor from "../components/Cursor";
+import Footer from "../components/Footer";
 
 const mont = Montserrat({
   weight: "variable",
@@ -26,11 +27,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`overflow-x-hidden ${mont.variable} ${plexMono.variable} ${comf.variable}`}>
-      <body className={" no-scrollbar"}>
+      <body className={" no-scrollbar bg-white"}>
         {/* <FireCursor /> */}
       <Navbar />
       <Sidebar />
       <main className="flex w-full flex-col relative gap-6 p-2">{children}</main>
+      <Footer />
       </body>
     </html>
   );

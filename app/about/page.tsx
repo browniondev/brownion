@@ -309,7 +309,7 @@ const About = () => {
         </motion.div>
       </DesktopView>
     </>
-  );
+  ); 
 };
 
 export default About;
