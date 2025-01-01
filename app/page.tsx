@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import HorizontalScrollMobile from "../components/HorizontalScrollMobile";
 import HorizontalScroll from "../components/HorizontalScroll";
-import { ChevronRight, ChevronLeft } from "lucide-react";
+import { ChevronRight, ChevronLeft, Play, Pause } from "lucide-react";
 import { useSpring, animated } from "@react-spring/web";
 import Brandspeed from "../components/Brandspeed";
 const images2 = [
@@ -118,10 +118,12 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [lastScrollTop, setLastScrollTop] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
+  const [videoPlay, setVideoPlay] = useState(true);
+  const text = "To Make the change a reality,We're here for you!";
 
-  const text = "To Make the change a reality,We're here for you!"
-
-  const [circles, setCircles] = useState<Array<{id:number, x:number, y:number}>>([]);
+  const [circles, setCircles] = useState<
+    Array<{ id: number; x: number; y: number }>
+  >([]);
 
   const fadeIn = useSpring({
     from: { opacity: 0, transform: "translateY(20px)" },
@@ -217,10 +219,9 @@ export default function Home() {
   const [isGrayscale, setIsGrayscale] = useState(true);
   return (
     <>
-    <section className="hero flex flex-col justify-center items-center h-screen w-full relative">
-      <div className="absolute top-1/3 -translate-y-1/3 w-full sm:w-2/3 lg:w-1/2">
-
-      {/* {circles.map(circle => {
+      <section className="hero flex flex-col justify-center items-center h-screen w-full relative">
+        <div className="absolute top-1/3 -translate-y-1/3 w-full sm:w-2/3 lg:w-1/2">
+          {/* {circles.map(circle => {
         return (
           <div className="absolute w-2 h-2 bg-black z-20 circulate mix-blend-difference rounded-full" key={circle.id}  style={{
                 transform: `translate(${circle.x}px, ${circle.y}px)`,
@@ -228,42 +229,55 @@ export default function Home() {
         )
       })} */}
 
-{circles.map((circle) => (
-        <div
-          key={circle.id}
-          className={`absolute w-2 h-2 bg-black mix-blend-difference ${(circle.id+1)%2 == 0 ? "circulate-opp" : "circulate"} rounded-full lg:${(circle.id+1)%2 == 0 ? "-" : ""}left-${(circle.id+1)*4} lg:${(circle.id+1)%2 == 0 ? "-" : ""}top-${(circle.id+1)*4} lg:translate-x-1/2`}
-          
-        ></div>
-      ))}
-      {/* <div className="absolute w-2 h-2 lg:left-0 lg:top-0 lg:translate-x-0 bg-black z-20 circulate-opp mix-blend-difference rounded-full"></div>
+          {circles.map((circle) => (
+            <div
+              key={circle.id}
+              className={`absolute w-2 h-2 bg-black mix-blend-difference ${
+                (circle.id + 1) % 2 == 0 ? "circulate-opp" : "circulate"
+              } rounded-full lg:${(circle.id + 1) % 2 == 0 ? "-" : ""}left-${
+                (circle.id + 1) * 4
+              } lg:${(circle.id + 1) % 2 == 0 ? "-" : ""}top-${
+                (circle.id + 1) * 4
+              } lg:translate-x-1/2`}
+            ></div>
+          ))}
+          {/* <div className="absolute w-2 h-2 lg:left-0 lg:top-0 lg:translate-x-0 bg-black z-20 circulate-opp mix-blend-difference rounded-full"></div>
       <div className="absolute w-2 h-2 lg:left-1/2 lg:top-0 lg:translate-x-1/2 bg-black z-20 circulate mix-blend-difference rounded-full"></div>
       <div className="absolute w-2 h-2 lg:left-2/2 lg:top-1/2 lg:translate-x-1/2 lg:-translate-y-1/2 bg-black z-20 circulate mix-blend-difference rounded-full"></div> */}
           <h1 className="font-sans text-3xl cursor-pointer lg:text-5xl tracking-wide uppercase font-bold">
-          {text.split(" ").map((word, index) => (
-        <span
-          key={index}
-          className="highlight-text inline-block animate-blink"
-          style={{
-            animationDelay: `${index * 0.3}s`, // Delay increases for each word
-          }}
-        >
-          {word}
-          {/* // {index < text.split(" ").length - 1 && " "} */}
-        &nbsp;</span>
-      ))}
+            {text.split(" ").map((word, index) => (
+              <span
+                key={index}
+                className="highlight-text inline-block animate-blink"
+                style={{
+                  animationDelay: `${index * 0.3}s`, // Delay increases for each word
+                }}
+              >
+                {word}
+                {/* // {index < text.split(" ").length - 1 && " "} */}
+                &nbsp;
+              </span>
+            ))}
             {/* <span className="highlight-text">To</span> <span className="highlight-text">Make</span> <span className="highlight-text">the</span> <span className="highlight-text">change</span> <span className="highlight-text"> a </span> <span className="highlight-text">reality,</span> <br /> <span className="highlight-text">We&apos;re</span> <span className="highlight-text">here</span> <span className="highlight-text">for</span> <span className="highlight-text">you!</span> */}
-            
-             </h1>
+          </h1>
           <div className="flex gap-6 items-center text-gray-700">
-          <h2 className="font-mono sm:mx-auto">Let brown.ion do it&apos;s magic!</h2>
-          <button className="bg-black text-white sm:px-6 sm:py-4 w-32 h-32 rounded-full uppercase sm:tracking-wider font-sans my-8 sm:text-xs text-xs font-medium">call a mage</button>
+            <h2 className="font-mono sm:mx-auto">
+              Let brown.ion do it&apos;s magic!
+            </h2>
+            <button className="bg-black text-white sm:px-6 sm:py-4 w-32 h-32 rounded-full uppercase sm:tracking-wider font-sans my-8 sm:text-xs text-xs font-medium">
+              call a mage
+            </button>
           </div>
-      </div>
-      <div className="brand-animation my-10 w-screen bottom-0 sm:top-1/3 sm:-translate-y-1/3 h-40 absolute">
-       <Brandspeed />
-      </div>
-    </section>
-    <img src="/projectbg.png" alt="" className="w-full h-auto rounded-md my-12 lg:my-24 lg:mt-72" />
+        </div>
+        <div className="brand-animation my-10 w-screen bottom-0 sm:top-1/3 sm:-translate-y-1/3 h-40 absolute">
+          <Brandspeed />
+        </div>
+      </section>
+      <img
+        src="/projectbg.png"
+        alt=""
+        className="w-full h-auto rounded-md my-12 lg:my-24 lg:mt-72"
+      />
       <div className="cont mt-12 flex-grow grid grid-cols-12 lg:grid-rows-7 sm:grid-rows-7 mx-auto gap-3">
         {/* Row 1 */}
         <div className="content col-span-12 sm:col-span-8 sm:row-span-2 md:row-span-3 rounded-2xl relative z-0">
@@ -271,23 +285,41 @@ export default function Home() {
             <button
               onClick={() => {
                 const video = document.querySelector("video");
-                console.log(video);
                 if (video) {
                   video.style.width = "100%";
                   video.style.height = "100%";
                 }
               }}
             >
-              fullscreen
+              Fullscreen
             </button>
           </div>
-          <video
-            src="/showreel.mp4"
-            autoPlay
-            loop
-            muted
-            className="bigger rounded-xl w-full mx-auto h-full object-cover"
-          />
+          <div className="relative">
+            <video
+              src="/showreel.mp4"
+              autoPlay
+              loop
+              muted
+              className="bigger rounded-xl w-full mx-auto h-full object-cover"
+            />
+            <button
+              onClick={() => {
+                const video = document.querySelector("video");
+                if (video) {
+                  if (video.paused) {
+                    setVideoPlay(true);
+                    video.play();
+                  } else {
+                    video.pause();
+                    setVideoPlay(false);
+                  } 
+                }
+              }}
+              className="absolute bottom-5 right-5 bg-white text-black rounded-full p-3 shadow-md"
+            >
+              {!videoPlay ? <Play /> : <Pause />} 
+            </button>
+          </div>
         </div>
         <div className="content col-span-6 sm:row-span-1 sm:col-span-4 md:row-span-2 bg-red p-2 rounded-2xl">
           <h2 className="font-mono lg:text-3xl w-full h-full flex items-center justify-center">
