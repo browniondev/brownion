@@ -256,7 +256,7 @@ export default function Home() {
              </h1>
           <div className="flex gap-6 items-center text-gray-700">
           <h2 className="font-mono sm:mx-auto">Let brown.ion do it&apos;s magic!</h2>
-          <button className="bg-black text-white sm:px-6 sm:py-4 w-32 h-32 rounded-full uppercase sm:tracking-wider font-sans my-8 sm:text-xs text-xs font-medium">call a mage</button>
+          <button className="bg-black text-white sm:px-6 sm:py-4 p-14 rounded-full uppercase sm:tracking-wider font-sans my-8 sm:text-xs text-xs font-medium">call a mage</button>
           </div>
       </div>
       <div className="brand-animation my-10 w-screen bottom-0 sm:top-1/3 sm:-translate-y-1/3 h-40 absolute">
@@ -297,8 +297,26 @@ export default function Home() {
           </h2>
         </div>
         {/* Row 2 */}
-        <div className="content col-span-6 sm:col-span-8 sm:row-span-1 md:col-span-4 md:row-span-3 bg-red border rounded-2xl">
-          Services
+        <div className="content col-span-6 sm:col-span-8 sm:row-span-1 md:col-span-4 md:row-span-3 bg-red border rounded-2xl h-auto p-4 font-sans group transition-all duration-300 ease-in-out backdrop-blur-lg flex flex-col items-center justify-center">
+          {/* Services */}
+
+          <ul className="mt-2 text-center">
+              <li className="text-2xl font-sans transition-all duration-300 ease-in-out transform group-hover:scale-75 hover:!scale-110 cursor-pointer">
+                Web Design
+              </li>
+              <li className="text-2xl font-sans transition-all duration-300 ease-in-out transform group-hover:scale-75 hover:!scale-110 cursor-pointer">
+                VFX and Video Editing
+              </li>
+              <li className="text-2xl font-sans transition-all duration-300 ease-in-out transform group-hover:scale-75 hover:!scale-110 cursor-pointer">
+                Social Media Marketing
+              </li>
+              <li className="text-2xl font-sans transition-all duration-300 ease-in-out transform group-hover:scale-75 hover:!scale-110 cursor-pointer">
+                Branding
+              </li>
+              <li className="text-2xl font-sans transition-all duration-300 ease-in-out transform group-hover:scale-75 hover:!scale-110 cursor-pointer">
+                App Development
+              </li>
+            </ul>
         </div>
         <div className="content relative col-span-12 sm:col-span-4 sm:row-start-2 sm:col-start-9 sm:row-span-2 md:col-span-6 md:row-span-2 bg-red border rounded-2xl flex justify-center items-center">
           <motion.img
@@ -343,8 +361,8 @@ export default function Home() {
         </div>
 
         {/* Tech Stack Images */}
-        <div className="content border border-black border-solid sm:border-none overflow-x-hidden w-full col-span-4 sm:row-span-2 sm:col-span-4 md:col-span-2 bg-red md:row-span-2 rounded-2xl flex flex-col">
-          <div className="flex sm:grid sm:grid-cols-2 sm:grid-rows-3 w-full h-full">
+        <div className="content border border-solid sm:border-none overflow-x-hidden py-4 w-full col-span-12 sm:row-span-2 sm:col-span-4 md:col-span-2 bg-red md:row-span-2 rounded-2xl flex flex-col">
+          <div className="flex flex-wrap justify-evenly gap-6 sm:grid sm:grid-cols-2 sm:grid-rows-3 w-full h-full">
             {currentSlice.map((src, index) => (
               <animated.img
                 key={index}
