@@ -86,7 +86,7 @@ const About = () => {
           >
             {/* Elements with bounce-down animation */}
             <motion.div
-              className="flex w-screen h-[12vh] bg-black border z-20 border-white border-solid fixed top-0"
+              className="flex w-screen h-[12vh] bg-black  fixed top-0"
               initial={{ translateY: -100 }}
               animate={{ translateY: 0, height: isShrinking ? "0vh" : "12vh" }}
               transition={{
@@ -199,7 +199,7 @@ const About = () => {
           </div>
 
           <motion.div
-            className="fixed w-screen flex flex-col justify-center items-center bottom-0 right-40 bg-[#3d3d3d] text-white p-4 z-50"
+            className="fixed w-screen flex flex-col justify-center items-center bottom-0 right-40 bg-[black]  text-white p-4 z-50"
             style={{ overflow: "hidden" }}
             initial={{ translateY: "100%" }}
             animate={{
@@ -210,7 +210,7 @@ const About = () => {
           >
             {/* Elements with bounce-down animation */}
             <motion.div
-              className="flex w-screen h-[12vh] bg-black border z-20 border-white border-solid fixed top-0"
+              className="flex w-screen h-[12vh] bg-black z-20   fixed top-0"
               initial={{ translateY: -100 }}
               animate={{ translateY: 0, height: isShrinking ? "0vh" : "12vh" }}
               transition={{
@@ -221,7 +221,7 @@ const About = () => {
             ></motion.div>
 
             <motion.div
-              className="flex w-[5px] h-[60vh] left-[55px] bg-black z-0 border-solid fixed top-0"
+              className="flex w-[5px] h-[60vh] left-[55px] bg-white  z-40  fixed top-0"
               initial={{ translateY: -200 }}
               animate={{
                 translateY: 0,

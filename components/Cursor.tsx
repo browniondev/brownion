@@ -1,5 +1,7 @@
 import React, { MutableRefObject, useEffect, useRef } from 'react';
 
+
+
 const FireCursor = () => {
   const cursorRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
 //   const trailsRef: MutableRefObject<HTMLDivElement | null> = useRef(null);
@@ -8,7 +10,7 @@ const FireCursor = () => {
     const coords = { x: 0, y: 0 };
     let overPara = false;
     let cursorText = "";
-    const trailsRef: NodeListOf<HTMLDivElement> = document.querySelectorAll(".trail");
+    const trailsRef: NodeListOf<HTMLDivElement & {x: number, y: number}> = document.querySelectorAll(".trail");
 
     trailsRef.forEach(trail => {
       trail.x = 0;

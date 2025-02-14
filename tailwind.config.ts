@@ -25,6 +25,9 @@ const config = {
       body: ['"Open Sans"'],
     },
     extend: {
+      fontSize: {
+        xxs: "0.6rem"
+      },
       // mt suffix so that does not override default spacing values
     spacing: {
       lg: "2rem",
