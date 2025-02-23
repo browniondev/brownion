@@ -6,6 +6,7 @@ import { ChevronUp } from "lucide-react";
 import DesktopView from "../../components/views/desktopView";
 import TabView from "../../components/views/tabView";
 import MobileView from "../../components/views/mobileView";
+import NavOrbitIon from "../../components/NavOrbitIon";
 
 const About = () => {
   const router = useRouter();
@@ -237,7 +238,7 @@ const About = () => {
             ></motion.div>
 
             <motion.div
-              className="flex justify-center items-center w-[80px] top-[58vh] h-[80px] left-[20px] rounded-full bg-black border border-white border-solid fixed"
+              className="flex justify-center items-center w-[80px] top-[58vh] h-[80px] left-[20px] rounded-full bg-black fixed"
               initial={{ translateY: -150 }}
               animate={{ translateY: 0, opacity: isShrinking ? "0" : "1" }}
               transition={{
@@ -261,7 +262,7 @@ const About = () => {
               }}
             >
               <motion.div
-                className="flex w-[60px] justify-center items-center h-[60px] bg-white rounded-full"
+                className="flex ] justify-center items-center  bg-white rounded-full"
                 initial={{ scale: 0.5 }}
                 animate={{ scale: 1, opacity: isShrinking ? "0" : "1" }}
                 transition={{
@@ -272,7 +273,7 @@ const About = () => {
                 }}
                 whileTap={{}}
               >
-                <img src="../../up.png" alt="up" className="w-8 h-8" />
+                <NavOrbitIon />
               </motion.div>
             </motion.div>
 
