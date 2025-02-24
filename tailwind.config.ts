@@ -89,13 +89,18 @@ const config = {
           "0%, 100%": { color: "#ccc" },
           "50%": { color: "#000" },
         },
+        rotate: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(-360deg)' },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         blink: "blink 5s infinite",
+        rotate: 'rotate 5s linear infinite',
       },
-    },
+    }
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
