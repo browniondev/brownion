@@ -1,10 +1,17 @@
 "use client";
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { ChevronRight, ChevronLeft, Play, Pause } from "lucide-react";
 import { useSpring, animated } from "@react-spring/web";
 import Brandspeed from "../components/Brandspeed";
 import Stats from "../components/Stats";
+type InquiryForm = {
+  name: string;
+  number: string;
+  businessType: string;
+  target: string;
+};
+
 const images2 = [
   {
     src: "https://wallpapers.com/images/hd/purple-sky-3d-nature-9zgqmz91pcm7idf7.jpg",
@@ -87,6 +94,76 @@ export default function Home() {
   const [videoPlay, setVideoPlay] = useState(true);
   const text = "To Make the change a reality,We're here for you!";
 
+  const [formData, setFormData] = useState<InquiryForm>({
+    name: "",
+    number: "",
+    businessType: "",
+    target: "Brand Awareness",
+  });
+  const [isOpen, setIsOpen] = useState(false);
+  const targets = [
+    "Brand Awareness",
+    "Lead Generation",
+    "Sales",
+    "Customer Retention",
+  ];
+
+  const [errors, setErrors] = useState({
+    name: "",
+    number: "",
+    businessType: "",
+    target: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const validateForm = () => {
+    let newErrors = { name: "", number: "", businessType: "", target: "" };
+
+    // Email Regex: Simple validation for email format (if needed in the form)
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    // Phone Number Regex: Allows numbers, +, and up to 15 digits (adjust as needed)
+    const phoneRegex = /^[+]?[0-9]{7,15}$/;
+
+    if (!formData.name.trim()) newErrors.name = "Name is required";
+
+    // Validate phone number format
+    if (!formData.number.trim()) {
+      newErrors.number = "Number is required";
+    } else if (!phoneRegex.test(formData.number)) {
+      newErrors.number = "Invalid phone number";
+    }
+
+    if (!formData.businessType.trim())
+      newErrors.businessType = "Business type is required";
+
+    if (!formData.target.trim()) newErrors.target = "Please select a target";
+
+    console.log(Object.values(newErrors).every((error) => error === ""));
+
+    setErrors(newErrors);
+    return Object.values(newErrors).every((error) => error === "");
+  };
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+const handleSubmit = (e: { preventDefault: () => void; }) => {
+  e.preventDefault();
+  if (validateForm()) {
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsOpen(false); // Close after animation
+      setIsSubmitting(false);
+    }, 500); // Matches animation duration
+  }
+};
+
+
   const [circles, setCircles] = useState<
     Array<{ id: number; x: number; y: number }>
   >([]);
@@ -165,6 +242,10 @@ export default function Home() {
     }
   }, [isMobile]);
 
+  const closeForm = () => {
+    setIsOpen(false);
+  };
+
   const [currentIndex, setCurrentIndex] = useState(0); // Track the current image/project
   const imagesPerSlice = 4; // Number of images to show in the tech stack
 
@@ -185,8 +266,8 @@ export default function Home() {
   const [isGrayscale, setIsGrayscale] = useState(true);
   return (
     <>
-      <section className="hero flex flex-col justify-center items-center h-screen w-full relative">
-        <div className="absolute top-1/3 -translate-y-1/3 w-full sm:w-2/3 lg:w-1/2">
+      <section className="hero flex flex-col justify-center items-center h-screen z-50 w-full relative">
+        <div className="absolute z-50 top-1/3 -translate-y-1/3 w-full sm:w-2/3 lg:w-1/2">
           {/* {circles.map(circle => {
         return (
           <div className="absolute w-2 h-2 bg-black z-20 circulate mix-blend-difference rounded-full" key={circle.id}  style={{
@@ -226,9 +307,94 @@ export default function Home() {
             ))}
             {/* <span className="highlight-text">To</span> <span className="highlight-text">Make</span> <span className="highlight-text">the</span> <span className="highlight-text">change</span> <span className="highlight-text"> a </span> <span className="highlight-text">reality,</span> <br /> <span className="highlight-text">We&apos;re</span> <span className="highlight-text">here</span> <span className="highlight-text">for</span> <span className="highlight-text">you!</span> */}
           </h1>
-          <div className="flex gap-6 items-center text-gray-700">
-          <h2 className="font-mono sm:mx-auto">Let brown.ion do it&apos;s magic!</h2>
-          <button className="bg-black text-white sm:px-6 sm:py-4 p-14 rounded-full uppercase sm:tracking-wider font-sans my-8 sm:text-xs text-xs font-medium">call a mage</button>
+          <div className="flex z-50 gap-6 items-center text-gray-700">
+            <h2 className="font-mono sm:mx-auto">
+              Let brown.ion do it&apos;s magic!
+            </h2>
+            <button
+              onClick={() => {
+                setIsOpen(true);
+              }}
+              className="bg-black text-white sm:px-6 sm:py-4 p-14 rounded-full uppercase sm:tracking-wider font-sans my-8 sm:text-xs text-xs font-medium z-50 cursor-pointer"
+            >
+              call a mage
+            </button>
+            {isOpen && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed w-[100vw] h-[110vh] overflow-y-hidden  left-[-400px] top-[-280px] bg-[#0f0f0f]  flex justify-center items-center z-50"
+                onClick={closeForm} // Close modal when clicking overlay
+              >
+                <motion.form
+                  initial={{ y: 50, opacity: 0 }}
+                  animate={isSubmitting ? { y: -400, opacity: 0 } : { y: 0, opacity: 1 }}
+                  exit={{ y: -50, opacity: 0 }}
+                  onSubmit={handleSubmit}
+                  className="bg-[#141414] p-6 rounded-md w-full max-w-md flex flex-col gap-4 font-mono border"
+                  onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside form
+                >
+                  <h2 className="text-white text-lg font-serif">br.</h2>
+
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Your Name"
+                    className="bg-transparent border p-3 text-white rounded-sm outline-none"
+                  />
+
+                  <input
+                    type="tel"
+                    name="number"
+                    value={formData.number}
+                    onChange={handleChange}
+                    placeholder="Your Number"
+                    className="bg-transparent border p-3 text-white rounded-sm outline-none"
+                  />
+
+                  <input
+                    type="text"
+                    name="businessType"
+                    value={formData.businessType}
+                    onChange={handleChange}
+                    placeholder="Type of Business"
+                    className="bg-transparent border p-3 text-white rounded-sm outline-none"
+                  />
+
+                  <select
+                    name="target"
+                    value={formData.target}
+                    onChange={handleChange}
+                    className="bg-transparent border p-3 bg-white text-black rounded-sm outline-none"
+                  >
+                    {targets.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                  </select>
+
+                  {/* Show Validation Errors */}
+                  {errors && (
+                    <div className="text-red-500 text-md">
+                      {Object.values(errors).map((error, index) => (
+                        <p key={index}>{error}</p>
+                      ))}
+                    </div>
+                  )}
+
+                  <button
+                    type="submit"
+                    className="bg-white text-black py-3 rounded-sm font-bold"
+                  >
+                    Submit Inquiry
+                  </button>
+                </motion.form>
+              </motion.div>
+            )}
           </div>
         </div>
         <div className="brand-animation my-10 w-screen bottom-0 sm:top-1/3 sm:-translate-y-1/3 h-40 absolute">
@@ -275,12 +441,12 @@ export default function Home() {
                   } else {
                     video.pause();
                     setVideoPlay(false);
-                  } 
+                  }
                 }
               }}
               className="absolute bottom-5 right-5 bg-white text-black rounded-full p-3 shadow-md"
             >
-              {!videoPlay ? <Play /> : <Pause />} 
+              {!videoPlay ? <Play /> : <Pause />}
             </button>
           </div>
         </div>
@@ -296,22 +462,22 @@ export default function Home() {
           {/* Services */}
 
           <ul className="mt-2 text-center">
-              <li className="sm:text-xl text-sm md:text-2xl font-sans transition-all duration-300 ease-in-out transform group-hover:scale-75 hover:!scale-110 cursor-pointer">
-                Web Design
-              </li>
-              <li className="sm:text-xl text-sm md:text-2xl font-sans transition-all duration-300 ease-in-out transform group-hover:scale-75 hover:!scale-110 cursor-pointer">
-                VFX and Video Editing
-              </li>
-              <li className="sm:text-xl text-sm md:text-2xl font-sans transition-all duration-300 ease-in-out transform group-hover:scale-75 hover:!scale-110 cursor-pointer">
-                Social Media Marketing
-              </li>
-              <li className="sm:text-xl text-sm md:text-2xl font-sans transition-all duration-300 ease-in-out transform group-hover:scale-75 hover:!scale-110 cursor-pointer">
-                Branding
-              </li>
-              <li className="sm:text-xl text-sm md:text-2xl font-sans transition-all duration-300 ease-in-out transform group-hover:scale-75 hover:!scale-110 cursor-pointer">
-                App Development
-              </li>
-            </ul>
+            <li className="sm:text-xl text-sm md:text-2xl font-sans transition-all duration-300 ease-in-out transform group-hover:scale-75 hover:!scale-110 cursor-pointer">
+              Web Design
+            </li>
+            <li className="sm:text-xl text-sm md:text-2xl font-sans transition-all duration-300 ease-in-out transform group-hover:scale-75 hover:!scale-110 cursor-pointer">
+              VFX and Video Editing
+            </li>
+            <li className="sm:text-xl text-sm md:text-2xl font-sans transition-all duration-300 ease-in-out transform group-hover:scale-75 hover:!scale-110 cursor-pointer">
+              Social Media Marketing
+            </li>
+            <li className="sm:text-xl text-sm md:text-2xl font-sans transition-all duration-300 ease-in-out transform group-hover:scale-75 hover:!scale-110 cursor-pointer">
+              Branding
+            </li>
+            <li className="sm:text-xl text-sm md:text-2xl font-sans transition-all duration-300 ease-in-out transform group-hover:scale-75 hover:!scale-110 cursor-pointer">
+              App Development
+            </li>
+          </ul>
         </div>
         <div className="content relative col-span-12 sm:col-span-4 sm:row-start-2 sm:col-start-9 sm:row-span-2 md:col-span-6 md:row-span-2 bg-red border rounded-2xl flex justify-center items-center">
           <motion.img
