@@ -1,7 +1,8 @@
-import Image from 'next/image';
-import NavOrbitIon, { DualOrbitIon } from './NavOrbitIon';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { useEffect, useRef } from "react";
+import Image from "next/image";
+import NavOrbitIon, { DualOrbitIon } from "./NavOrbitIon";
+import { motion } from "framer-motion";
+import Link from "next/link";
 import { config } from "./config";
 
 const socialLinks = [
@@ -13,24 +14,42 @@ const socialLinks = [
 
 interface SidebarProps {
   barStatus: boolean;
-  setBarStatus: () => void;
+  setBarStatus: (status: boolean) => void;
 }
 
 export default function Sidebar({ barStatus, setBarStatus }: SidebarProps) {
+  const sidebarRef = useRef<HTMLDivElement | null>(null);
+  const urls = config.urls;
+
+  // Close sidebar when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+        setBarStatus(false);
+      }
+    }
+
+    if (barStatus) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [barStatus, setBarStatus]);
+
   const sidebarVariants = {
     hidden: { height: 0, opacity: 0, transition: { duration: 0.4 } },
     visible: { height: "75%", opacity: 1, transition: { duration: 0.5 } },
     exit: { height: 0, opacity: 0, transition: { duration: 0.6 } },
   };
 
-  const urls = config.urls;
-
   return (
     <>
       <ul
         className="sidebar md:left-10 fixed md:transform-none bottom-6
-     bg-gradient-to-b from-gray-500/30 to-gray-800/50 backdrop-blur-sm backdrop-filter 
-      p-3 flex flex-row w-10/12 sm:w-auto sm:flex-col gap-2 shadow-2xl rounded-full z-40 justify-evenly"
+        bg-gradient-to-b from-gray-500/30 to-gray-800/50 backdrop-blur-sm backdrop-filter 
+        p-3 flex flex-row w-10/12 sm:w-auto sm:flex-col gap-2 shadow-2xl rounded-full z-40 justify-evenly"
       >
         {socialLinks.map((social, i) => (
           <li key={i} className="bg-glow">
@@ -48,16 +67,17 @@ export default function Sidebar({ barStatus, setBarStatus }: SidebarProps) {
       </ul>
 
       <motion.div
+        ref={sidebarRef}
         className="fixed md:transform-none bottom-6
-      bg-black backdrop-blur-sm backdrop-filter 
-      p-3 flex flex-col items-center sm:hidden w-10/12 sm:w-auto sm:flex-col shadow-2xl rounded-3xl z-50 justify-center gap-6 z-10 overflow-hidden"
+        bg-black backdrop-blur-sm backdrop-filter 
+        p-3 flex flex-col items-center sm:hidden w-10/12 sm:w-auto sm:flex-col shadow-2xl rounded-3xl z-50 justify-center gap-6 overflow-hidden"
         variants={sidebarVariants}
         initial="hidden"
         animate={barStatus ? "visible" : "hidden"}
         exit="exit"
       >
         <div
-          onClick={setBarStatus}
+          onClick={() => setBarStatus(false)}
           className="close bg-black shadow h-16 w-16 absolute rounded-full flex justify-center items-center -top-1/2"
         >
           <DualOrbitIon />

@@ -266,8 +266,8 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
   const [isGrayscale, setIsGrayscale] = useState(true);
   return (
     <>
-      <section className="hero flex flex-col justify-center items-center h-screen z-50 w-full relative">
-        <div className="absolute z-50 top-1/3 -translate-y-1/3 w-full sm:w-2/3 lg:w-1/2">
+      <section className="hero flex flex-col justify-center items-center h-screen z-30 w-full relative">
+        <div className="absolute z-30 top-1/3 -translate-y-1/3 w-full sm:w-2/3 lg:w-1/2">
           {/* {circles.map(circle => {
         return (
           <div className="absolute w-2 h-2 bg-black z-20 circulate mix-blend-difference rounded-full" key={circle.id}  style={{
@@ -332,7 +332,7 @@ const handleSubmit = (e: { preventDefault: () => void; }) => {
                   animate={isSubmitting ? { y: -400, opacity: 0 } : { y: 0, opacity: 1 }}
                   exit={{ y: -50, opacity: 0 }}
                   onSubmit={handleSubmit}
-                  className="bg-[#141414] p-6 rounded-md w-full max-w-md flex flex-col gap-4 font-mono border"
+                  className="bg-[#131313] p-6 rounded-md w-full max-w-md flex flex-col gap-4 font-mono border"
                   onClick={(e) => e.stopPropagation()} // Prevents closing when clicking inside form
                 >
                   <h2 className="text-white text-lg font-serif">br.</h2>
