@@ -1,3 +1,5 @@
+"use client";
+
 // components/DesktopView.tsx
 import { useState, useEffect } from "react";
 

@@ -3,79 +3,31 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { projectDetails } from "../projectsDetails";
 
-const images = [
-  {
-    src: "https://wallpapers.com/images/hd/purple-sky-3d-nature-9zgqmz91pcm7idf7.jpg",
-    title: "Showcase site | Branding",
-    caption: "AMGPRO",
-    key: "0",
-  },
-  {
-    src: "https://i.pinimg.com/originals/13/3b/89/133b89168deaceb619421cd65fc62f59.jpg",
-    title: "Ecommerce site | Branding",
-    caption: "Diamonds Story",
-    key: "1",
-  },
-  {
-    src: "https://e1.pxfuel.com/desktop-wallpaper/859/280/desktop-wallpaper-awesome-3d-nature-full-screen-3d-full-screen.jpg",
-    title: "Ecommerce site | Branding",
-    caption: "Diamonds Story",
-    key: "2",
-  },
-  {
-    src: "https://cdn.wallpapersafari.com/64/26/m4ojCw.jpg",
-    title: "Ecommerce site | Branding",
-    caption: "Diamonds Story",
-    key: "3",
-  },
-  {
-    src: "https://cdn.wallpapersafari.com/64/26/m4ojCw.jpg",
-    title: "Ecommerce site | Branding",
-    caption: "Diamonds Story",
-    key: "4",
-  },
-  {
-    src: "https://cdn.wallpapersafari.com/64/26/m4ojCw.jpg",
-    title: "Ecommerce site | Branding",
-    caption: "Diamonds Story",
-    key: "5",
-  },
-  // Add more images as needed
-];
+const fadeInVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
 
-const images2 = [
-  "../../mcd.webp",
-  "../../brand.jpg",
-  "../../stb.avif",
-  "../../brand.jpg",
-  "../../stb.avif",
-  "../../mcd.webp",
-  "../../brand.jpg",
-  "../../stb.avif",
-  "../../brand.jpg",
-  "../../stb.avif",
-  "../../brand.jpg",
-  "../../stb.avif",
-  "../../mcd.webp",
-  "../../brand.jpg",
-];
-
-const ProjectPageMobile: React.FC = () => {
+const ProjectPageMobile: React.FC<{ projectTitle: string }> = ({ projectTitle }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [lastScrollTop, setLastScrollTop] = useState(1);
   const [isMobile, setIsMobile] = useState(false);
+  projectTitle = projectTitle.replaceAll("%20", " ");
 
   const [scrollWidth, setScrollWidth] = useState(0);
   const containerRef2 = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (containerRef2.current) {
-      const scrollableWidth = containerRef2.current.scrollWidth;
-      const visibleWidth = containerRef2.current.offsetWidth;
-      setScrollWidth(scrollableWidth - visibleWidth);
-    }
-  }, [images2]);
+    const blogData = projectDetails[projectTitle];
+
+  // useEffect(() => {
+  //   if (containerRef2.current) {
+  //     const scrollableWidth = containerRef2.current.scrollWidth;
+  //     const visibleWidth = containerRef2.current.offsetWidth;
+  //     setScrollWidth(scrollableWidth - visibleWidth);
+  //   }
+  // }, [images2]);
 
   useEffect(() => {
     // Update isMobile state based on window size
@@ -138,17 +90,17 @@ const ProjectPageMobile: React.FC = () => {
   } | null>(null);
   const router = useRouter();
   const [isFocused, setIsFocused] = useState(false);
-  useEffect(() => {
-    const imageIndex = localStorage.getItem("selectedImageId");
-    if (imageIndex !== null) {
-      const index = parseInt(imageIndex, 10);
-      if (index >= 0 && index < images.length) {
-        setSelectedImage(images[index]);
-      }
-    } else {
-      router.push("/"); // redirect if no image is selected
-    }
-  }, [router]);
+  // useEffect(() => {
+  //   const imageIndex = localStorage.getItem("selectedImageId");
+  //   if (imageIndex !== null) {
+  //     const index = parseInt(imageIndex, 10);
+  //     if (index >= 0 && index < images.length) {
+  //       setSelectedImage(images[index]);
+  //     }
+  //   } else {
+  //     router.push("/"); // redirect if no image is selected
+  //   }
+  // }, [router]);
 
   const handleImageClick = () => {
     setIsFocused((prev) => !prev);
@@ -180,15 +132,15 @@ const ProjectPageMobile: React.FC = () => {
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <motion.h1 className="text-sm font-bold">
-                  {selectedImage.title}
+                  {blogData.title}
                 </motion.h1>
                 <motion.p className="text-sm mt-2">
-                  {selectedImage.caption}
+                  {blogData.caption}
                 </motion.p>
               </motion.div>
               <motion.img
-                src={selectedImage.src}
-                alt={selectedImage.caption}
+                src={blogData.mainImage}
+                alt={blogData.title}
                 onClick={handleImageClick}
                 style={
                   !isFocused
@@ -204,125 +156,57 @@ const ProjectPageMobile: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Scroll Section */}
+      {/* Dynamic Sections */}
+            {blogData.sections.map((section, index) => (
+              <motion.div
+                key={index}
+                initial="hidden"
+                animate="visible"
+                variants={fadeInVariants}
+                className="w-full my-12"
+              >
+                <h2 className="sm:text-2xl text-lg font-semibold text-gray-800 mb-4">{section.subtitle}</h2>
+                <p className="sm:text-lg text-base text-gray-600 mb-4">{section.description}</p>
+                {section.image && (
+                  <div
+                    className={`flex ${section.image.length === "half" ? "flex-row items-center" : "flex-col"} gap-6`}
+                  >
+                    <motion.img
+                      src={section.image.url}
+                      alt={section.subtitle}
+                      className={`rounded-lg shadow-md ${section.image.length === "half" ? "w-1/2" : "w-full"}`}
+                    />
+                    {section.image.length === "half" && (
+                      <p className="text-lg text-gray-600 w-1/2">{section.description}</p>
+                    )}
+                  </div>
+                )}
+              </motion.div>
+            ))}
+      
+            {/* Technologies Section */}
       <div className="text-black flex flex-col items-center justify-center">
-        <div
-          
-          className="w-full h-[45vh] flex flex-col  items-center justify-center mt-36"
-        >
+        <div className="w-full h-auto flex gap-6 flex-col md:flex-row-reverse items-center justify-center mt-10 px-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-black mb-4">Technologies Incorporated</h2>
           <motion.div
-            className=" text-justify flex flex-col justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-xl font-bold text-black mb-4">
-              About the Project
-            </h2>
-            <p className="text-sm text-black">
-              This project showcases a modern and interactive design for a
-              branding site. The visuals emphasize the brand's aesthetic,
-              providing users with an engaging and immersive experience.
-            </p>
-          </motion.div>
-
-          <motion.div
-            className=" flex justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <motion.img
-              src={images[2].src || ""}
-              alt="Project Detail"
-              style={{ filter: `grayscale(1)` }}
-              className=" h-[200px] w-[300px] mt-8  md:max-w-full md:max-h-[40vh] rounded-sm object-cover"
-              initial={{
-                filter: "grayscale(1)", // Start with full grayscale
-                clipPath: "inset(0% 0% 0% 0%)", // Start with the bottom being fully visible
-              }}
-              whileTap={{
-                filter: "grayscale(0)", // Remove grayscale
-                clipPath: "inset(0% 0% 0% 0%)", // Slide up effect by revealing the full image
-                transition: {
-                  duration: 0.5, // Time taken for the effect to complete
-                  ease: "easeInOut",
-                },
-              }}
-            />
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Technologies Section */}
-      <div className="text-black flex flex-col items-center justify-center">
-        <div className="w-full h-[45vh] flex flex-col items-center justify-center mt-10">
-          <h2 className="text-md font-bold text-black ">
-            Technologies Incorporated
-          </h2>
-          <motion.div
-            className="w-[70vw] flex flex-col justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
+            className="w-full md:w-[70vw] flex flex-col justify-center overflow-x-auto md:overflow-visible"
+            initial="hidden"
+            animate="visible"
+            variants={fadeInVariants}
           >
             <div
               ref={containerRef}
-              className="content justify-center col-span-12 row-span-1 bg-red border-0 rounded-2xl overflow-hidden whitespace-nowrap flex items-center py-16"
+              className="content justify-start md:justify-center col-span-12 row-span-1 border-0 rounded-2xl overflow-hidden whitespace-nowrap flex items-center py-8 md:py-16 gap-6 md:gap-12"
             >
-              <motion.div
-                className="flex"
-                animate={{ x: ["0%", "-1%"] }} // Scroll left
-                transition={{
-                  duration: 90000, // Adjust for scroll speed
-                  ease: "easeIn",
-                  repeat: Infinity, // Infinite loop
-                }}
-              >
-                {/* Duplicate images for seamless looping */}
-                {[
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                  ...images2,
-                ].map((src, index) => (
-                  <motion.img
-                    key={index}
-                    src={src}
-                    alt={`Logo ${index}`}
-                    className="w-12 h-12 mx-4 grayscale cursor-pointer"
-                    initial={{
-                      filter: "grayscale(1)",
-                      clipPath: "inset(0% 0% 0% 0%)",
-                    }}
-                    whileHover={{
-                      filter: "grayscale(0)",
-                      clipPath: "inset(0% 0% 0% 0%)",
-                      transition: {
-                        duration: 0.2,
-                        ease: "easeInOut",
-                      },
-                    }}
-                  />
-                ))}
-              </motion.div>
+              {blogData.technologies.map((src, index) => (
+                <motion.img
+                  key={index}
+                  src={src}
+                  alt={`Tech ${index}`}
+                  className="w-16 h-16 md:w-24 md:h-24 mx-2 md:mx-4 grayscale cursor-pointer"
+                  whileHover={{ filter: "grayscale(0)", transition: { duration: 0.2, ease: "easeInOut" } }}
+                />
+              ))}
             </div>
           </motion.div>
         </div>

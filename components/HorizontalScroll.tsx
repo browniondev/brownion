@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation"; // Import useRouter from Next.js
 import clsx from "clsx";
 import { motion, AnimatePresence } from "framer-motion";
 import { TransitionLink } from "./TransitionLink";
+import { projectDetails } from "../projectsDetails";
 
 const images = [
   {
@@ -50,8 +51,10 @@ const HorizontalScroll: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollPosition, setScrollPosition] = useState<number>(0);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
-  const infiniteImages = [...images, ...images, ...images];
   const [central, setCentral] = useState<any>(null);
+  
+  const projects = Object.keys(projectDetails);
+  const infiniteImages = [...projects, ...projects, ...projects];
   useEffect(() => {
     const handleWheel = (event: WheelEvent) => {
       if (scrollRef.current) {
@@ -99,18 +102,18 @@ const HorizontalScroll: React.FC = () => {
     const elementWidth = scrollRef.current.offsetWidth / 3;
     const center = scrollPosition + scrollRef.current.offsetWidth / 2;
     const centralIndex = Math.floor(center / elementWidth);
-    return centralIndex % images.length;
+    return centralIndex % projects.length;
   };
 
   const handleImageClick = () => {
     const centralIndex = calculateCentralImageIndex();
-    const centralImage = infiniteImages[centralIndex];
+    const centralImage = projectDetails[infiniteImages[centralIndex]];
 
     console.log(centralImage); // You can handle the central image here
 
     if (expandedIndex === null) {
       setExpandedIndex(centralIndex);
-      localStorage.setItem("selectedImageId", centralImage.key); // Store the selected central image ID in localStorage
+      localStorage.setItem("selectedImageId", centralImage.title); // Store the selected central image ID in localStorage
     }
   };
 
@@ -163,8 +166,8 @@ const HorizontalScroll: React.FC = () => {
               transition={{ duration: 2 }}
             >
               <motion.img
-                src={infiniteImages[expandedIndex].src}
-                alt={infiniteImages[expandedIndex].caption}
+                src={projectDetails[infiniteImages[expandedIndex]].mainImage}
+                alt={projectDetails[infiniteImages[expandedIndex]].caption}
                 className="w-full h-full object-cover"
                 onClick={(e) => e.stopPropagation()}
               />
@@ -190,7 +193,7 @@ const HorizontalScroll: React.FC = () => {
                 transition={{ delay: 2, duration: 0.5 }}
               >
                 <p className="text-white mb-12 z-[101] text-3xl font-bold">
-                  {infiniteImages[expandedIndex].title}
+                  {projectDetails[infiniteImages[expandedIndex]].title}
                 </p>
                 <button
                   className="absolute top-4 right-4 text-white text-3xl bg-black bg-opacity-75 rounded-full p-2"
@@ -210,7 +213,7 @@ const HorizontalScroll: React.FC = () => {
         style={{ maxWidth: "100vw" }}
       >
         <div className="inline-flex mt-[120px] items-center gap-8 justify-center">
-          {infiniteImages.map((image, index) => {
+          {infiniteImages.map((project, index) => {
             const { grayscale, scale } = calculateGrayscaleAndScale(index);
 
             return (
@@ -236,10 +239,10 @@ const HorizontalScroll: React.FC = () => {
                   scale: { duration: 0.5, ease: "easeInOut" },
                 }}
               >
-                <TransitionLink href="/projects/project">
+                <TransitionLink href={`/projects/${project}`}>
                   <motion.img
-                    src={image.src}
-                    alt={image.caption}
+                    src={projectDetails[project].mainImage}
+                    alt={projectDetails[project].caption}
                     className="h-[350px] min-w-[600px] object-cover shadow-md z-50"
                     style={{ filter: `grayscale(${grayscale})` }}
                     whileHover={{ scale: 1.05 }} // Slight scaling on hover for interactivity
@@ -251,9 +254,9 @@ const HorizontalScroll: React.FC = () => {
                   />
                 </TransitionLink>
                 <div className="flex justify-between mt-2 relative z-10">
-                  <p className="text-md sm:text-xl font-bold">{image.title}</p>
+                  <p className="text-md sm:text-xl font-bold">{projectDetails[project].title}</p>
                   <p className="text-md sm:text-lg text-gray-400">
-                    {image.caption}
+                    {projectDetails[project].caption}
                   </p>
                 </div>
               </motion.div>

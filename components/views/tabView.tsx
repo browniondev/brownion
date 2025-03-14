@@ -1,3 +1,5 @@
+"use client";
+
 // components/TabView.tsx
 import { useState, useEffect } from "react";
 
